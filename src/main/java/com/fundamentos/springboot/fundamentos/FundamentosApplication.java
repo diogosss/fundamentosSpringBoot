@@ -2,6 +2,7 @@ package com.fundamentos.springboot.fundamentos;
 
 import com.fundamentos.springboot.fundamentos.bean.MyBean;
 import com.fundamentos.springboot.fundamentos.bean.MyBeanWithDependency;
+import com.fundamentos.springboot.fundamentos.beanReto.MyOwnBeanWithDependency;
 import com.fundamentos.springboot.fundamentos.component.ComponentDependency;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
@@ -11,7 +12,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class FundamentosApplication implements CommandLineRunner {
 
-	private MyBeanWithDependency myBeanWithDependency;
+	private MyOwnBeanWithDependency myOwnBeanWithDependency; //RETO
+
+	private MyBeanWithDependency myBeanWithDependency; //dependencia dentro de otra dependencia
 
 	private MyBean myBean; //inyectar dependencia
 
@@ -20,10 +23,15 @@ public class FundamentosApplication implements CommandLineRunner {
 	//inyeccion de componentes en constructor
 	//cuando hay dos clases usando la interfaz ComponentDependency hay un error
 	//se solucuiona con Qualifier -> **la primerera letra en minuscula
-	public FundamentosApplication(@Qualifier("componentTwoImplement") ComponentDependency componentDependency, MyBean myBean, MyBeanWithDependency myBeanWithDependency){
+	public FundamentosApplication(@Qualifier("componentTwoImplement") ComponentDependency componentDependency,
+								  MyBean myBean,
+								  MyBeanWithDependency myBeanWithDependency,
+								  MyOwnBeanWithDependency myOwnBeanWithDependency
+								  ){
 		this.componentDependency = componentDependency;
 		this.myBean = myBean; //inyeccion dependencia
-		this.myBeanWithDependency = myBeanWithDependency;
+		this.myBeanWithDependency = myBeanWithDependency;  //dependencia dentro de otra dependencia
+		this.myOwnBeanWithDependency = myOwnBeanWithDependency; //RETO
 	}
 
 	public static void main(String[] args) {
@@ -35,10 +43,14 @@ public class FundamentosApplication implements CommandLineRunner {
 		//ejecutar en applicacion
 		componentDependency.saludar();
 
-		//
+		//inyect dependencia
 		myBean.print();
 
-		//
+		// dependencia dentro de otra dependencia
 		myBeanWithDependency.printWithDependency();
+
+
+		///RETO
+		myOwnBeanWithDependency.displayElements();
 	}
 }
