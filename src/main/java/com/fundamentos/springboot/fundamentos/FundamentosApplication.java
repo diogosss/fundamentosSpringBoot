@@ -6,6 +6,8 @@ import com.fundamentos.springboot.fundamentos.bean.MyBeanWithProperties;
 import com.fundamentos.springboot.fundamentos.beanReto.MyOwnBeanWithDependency;
 import com.fundamentos.springboot.fundamentos.component.ComponentDependency;
 import com.fundamentos.springboot.fundamentos.pojo.UserPojo;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +15,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class FundamentosApplication implements CommandLineRunner {
+
+	Log LOGGER = LogFactory.getLog(FundamentosApplication.class);//Logs
 
 	private UserPojo userPojo; //user propiedades
 
@@ -68,6 +72,15 @@ public class FundamentosApplication implements CommandLineRunner {
 
 		//Uso de Pojo
 		System.out.println(userPojo.getEmail()+"----"+userPojo.getPassword()+"--"+userPojo.getAge());
+
+		LOGGER.error("Esto es un error del appl"); //imprimir un log de error
+
+		try{
+			int value = 10/0;
+			LOGGER.debug("Mi valor " + value);
+		}catch (Exception e){
+			LOGGER.error("Es es un error division por cero" + e.getMessage());
+		}
 
 	}
 }
