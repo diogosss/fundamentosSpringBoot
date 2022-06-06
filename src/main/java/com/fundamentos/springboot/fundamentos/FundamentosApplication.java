@@ -5,6 +5,7 @@ import com.fundamentos.springboot.fundamentos.bean.MyBeanWithDependency;
 import com.fundamentos.springboot.fundamentos.bean.MyBeanWithProperties;
 import com.fundamentos.springboot.fundamentos.beanReto.MyOwnBeanWithDependency;
 import com.fundamentos.springboot.fundamentos.component.ComponentDependency;
+import com.fundamentos.springboot.fundamentos.pojo.UserPojo;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,6 +13,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class FundamentosApplication implements CommandLineRunner {
+
+	private UserPojo userPojo; //user propiedades
 
 	private MyBeanWithProperties myBeanWithProperties; //uso de propiedades
 
@@ -30,13 +33,15 @@ public class FundamentosApplication implements CommandLineRunner {
 								  MyBean myBean,
 								  MyBeanWithDependency myBeanWithDependency,
 								  MyOwnBeanWithDependency myOwnBeanWithDependency,
-								  MyBeanWithProperties myBeanWithProperties
+								  MyBeanWithProperties myBeanWithProperties,
+								  UserPojo userPojo
 								  ){
 		this.componentDependency = componentDependency;
 		this.myBean = myBean; //inyeccion dependencia
 		this.myBeanWithDependency = myBeanWithDependency;  //dependencia dentro de otra dependencia
 		this.myOwnBeanWithDependency = myOwnBeanWithDependency; //RETO
 		this.myBeanWithProperties = myBeanWithProperties; //uso de propiedades
+		this.userPojo = userPojo; //user propiedades
 	}
 
 	public static void main(String[] args) {
@@ -60,6 +65,9 @@ public class FundamentosApplication implements CommandLineRunner {
 
 		//Uso de propiedades
 		System.out.println(myBeanWithProperties.function());
-		
+
+		//Uso de Pojo
+		System.out.println(userPojo.getEmail()+"----"+userPojo.getPassword()+"--"+userPojo.getAge());
+
 	}
 }
