@@ -40,5 +40,5 @@ public class GeneralConfiguration {
         dataSourceBuilder.password("");
         return dataSourceBuilder.build();
     }
-    
+
 }
